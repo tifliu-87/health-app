@@ -1,4 +1,4 @@
-name: Publish Daily
+name: Publish tofu
 on:
   push:
     branches: [main]

@@ -37,3 +37,12 @@ run("data.entries.push({...data.foods[0],id:'before-edit',date:chosenDate});food
 run("$('#foodform').onsubmit({preventDefault(){},target:{name:'Boiled eggs',serving:'1 egg',protein:'6',calories:'72'}})");
 assert.equal(run('data.foods[0].name'),'Boiled eggs');assert.equal(run('data.foods[0].protein'),6);assert.equal(run('data.entries[0].protein'),12);assert.equal(run('data.entries[0].foodId'),'eggs');
 console.log('PASS: preset removal preserves history; food edits save and preserve past nutrition');
+
+run("foodForm('eggs');$('#deletefood').onclick()");
+assert.equal(run("data.foods.some(f=>f.id==='eggs')"),true);
+run("$('#cancel-delete').onclick()");
+assert.equal(run("data.foods.some(f=>f.id==='eggs')"),true);
+run("$('#deletefood').onclick();$('#confirm-delete').onclick()");
+assert.equal(run("data.foods.some(f=>f.id==='eggs')"),false);
+assert.equal(run('data.entries.length'),1);
+console.log('PASS: deletion requires confirmation; cancellation and historical logs preserved');
