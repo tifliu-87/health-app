@@ -46,3 +46,7 @@ run("$('#deletefood').onclick();$('#confirm-delete').onclick()");
 assert.equal(run("data.foods.some(f=>f.id==='eggs')"),false);
 assert.equal(run('data.entries.length'),1);
 console.log('PASS: deletion requires confirmation; cancellation and historical logs preserved');
+run("$('#settings').onclick()");assert.equal(run('tab'),'settings');assert.match(el('#content').innerHTML,/<h2>Settings<\/h2>/);
+run("$('#goals').onsubmit({preventDefault(){},target:{protein:'130',calories:'2100'}})");assert.equal(run('data.goals.protein'),130);assert.equal(run('tab'),'settings');
+run("$('#nutrition-tab').onclick()");assert.match(el('#content').innerHTML,/\/ 130 g/);
+console.log('PASS: Settings tab, goal saving, and return to Nutrition');
